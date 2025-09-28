@@ -38,3 +38,29 @@ inputUpload.addEventListener("change", async (evento) => {
     }
 
 })
+
+const inputTags = document.querySelector("#categoria")
+const listaTags = document.querySelector(".lista-tags")
+
+inputTags.addEventListener("keypress", (evento) =>{
+    if(evento.key === "Enter"){
+        evento.preventDefault()
+        const tagParaAdicionar =  inputTags.value.trim();
+
+        if(tagParaAdicionar !== ""){
+            const tagNova = document.createElement("li")
+            tagNova.innerHTML = `<p>${tagParaAdicionar}</p> <img src="./img/close-black.svg" class="remove-tag">`
+
+            listaTags.append(tagNova)
+            inputTags.value = ""
+        }
+    }
+})
+
+listaTags.addEventListener("click",(evento) => {
+    if(evento.target.classList.contains("remove-tag")){
+        const tagParaRemover = evento.target.parentElement
+
+        listaTags.remove(tagParaRemover)
+    }
+})

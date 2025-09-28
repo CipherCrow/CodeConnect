@@ -111,6 +111,7 @@ textarea{
 
 .lista-tags{
     display: flex;
+    gap: 10px;
 }
 
 .lista-tags li{
@@ -120,6 +121,10 @@ textarea{
     gap: 10px;
     padding: 4px 8px;
     border-radius: 4px;
+}
+
+.remove-tag{
+    cursor: pointer;
 }
 
 .container-botoes{
