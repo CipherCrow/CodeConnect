@@ -42,17 +42,41 @@ inputUpload.addEventListener("change", async (evento) => {
 const inputTags = document.querySelector("#categoria")
 const listaTags = document.querySelector(".lista-tags")
 
-inputTags.addEventListener("keypress", (evento) =>{
+const tagsDisponiveis = ["Front-end", "Programação", "Data Science", "Full-stack", "HTML", "CSS", "JavaScript"];
+
+
+// Simulando busca no banco
+async function verificaTagsDisponiveis(tagTexto) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(tagsDisponiveis.includes(tagTexto));
+        }, 1000)
+    })
+}
+
+
+
+inputTags.addEventListener("keypress", async (evento) =>{
     if(evento.key === "Enter"){
         evento.preventDefault()
         const tagParaAdicionar =  inputTags.value.trim();
 
         if(tagParaAdicionar !== ""){
-            const tagNova = document.createElement("li")
-            tagNova.innerHTML = `<p>${tagParaAdicionar}</p> <img src="./img/close-black.svg" class="remove-tag">`
+            try{
+                const tagExite = await verificaTagsDisponiveis(tagParaAdicionar)
+                if(tagExite){
+                    const tagNova = document.createElement("li")
+                    tagNova.innerHTML = `<p>${tagParaAdicionar}</p> <img src="./img/close-black.svg" class="remove-tag">`
 
-            listaTags.append(tagNova)
-            inputTags.value = ""
+                    listaTags.append(tagNova)
+                    inputTags.value = ""
+                } else {
+                    alert("Tag não encontrada dentre as disponiveis!")
+                }
+            }catch(error){
+                console.error("deu ruim")
+                alert("Deu ruim")
+            }
         }
     }
 })
