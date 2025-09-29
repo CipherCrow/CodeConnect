@@ -88,3 +88,53 @@ listaTags.addEventListener("click",(evento) => {
         listaTags.remove(tagParaRemover)
     }
 })
+
+const btnPublicar = document.querySelector(".botao-publicar")
+
+// Simulando envio para o banco
+async function publicarProjeto(nomeDoProjeto, descricaoProjeto, tagsProjeto) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const deuCerto = Math.random() > 0.5;
+            if (deuCerto) {
+                resolve("Projeto publicado com sucesso.")
+            } else {
+                reject("Erro ao publicar o projeto.")
+            }
+        }, 2000)
+    })
+}
+
+btnPublicar.addEventListener("click", async (evento) =>{
+    evento.preventDefault()
+
+    const nomeDoProjeto = document.getElementById("nome").value
+    const descricaoDoProjeto = document.getElementById("descricao").value
+    const tagsProjeto = Array.from(listaTags.querySelectorAll("p")).map((tag) => tag.textContent);
+    
+    try{
+        const resultado = await publicarProjeto(nomeDoProjeto,descricaoDoProjeto,tagsProjeto)
+        console.log(resultado)
+        alert(resultado)
+    }catch(error){
+        console.error("Deu ruim :" + error)
+        alert("Deu ruim: " + error)
+    }
+})
+
+function limparFormulario(){
+    const formulario = document.querySelector("form")
+    formulario.reset();
+
+    imagemPrincipal.src = "./img/imagem1.png"
+    nomeDaImagem.textContent = "imagem_projeto.png"
+    listaTags.innerHTML = ""
+}
+
+const botaoDescartar = document.querySelector(".botao-descartar")
+
+botaoDescartar.addEventListener("click",(evento)=>{
+    evento.preventDefault()
+
+    limparFormulario();
+})
